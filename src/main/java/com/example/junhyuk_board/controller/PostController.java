@@ -37,7 +37,7 @@ public class PostController {
     }
 
     @GetMapping("{id}")
-    public Post showPostByID(@PathVariable String id)
+    public PostDTO showPostByID(@PathVariable String id)
     {
         return postService.findPostByID(Long.parseLong(id));
     }

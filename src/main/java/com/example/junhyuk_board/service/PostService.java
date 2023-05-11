@@ -36,9 +36,11 @@ public class PostService {
         return postDTOList;
     }
 
-    public Post findPostByID(Long id)
+    public PostDTO findPostByID(Long id)
     {
         Optional<Post> post = postRepository.findById(id);
-        return post.get();
+        Post naturalPost = post.get();
+        PostDTO postDTO = naturalPost.EntityToDTO();
+        return postDTO;
     }
 }
