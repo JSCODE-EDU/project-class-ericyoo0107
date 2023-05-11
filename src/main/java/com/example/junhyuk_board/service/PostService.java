@@ -35,4 +35,9 @@ public class PostService {
         return posts;
     }
 
+    public Post findPostByID(Long id)
+    {
+        Optional<Post> post = postRepository.findById(id);
+        return post.get();
+    }
 }
