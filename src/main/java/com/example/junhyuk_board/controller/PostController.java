@@ -31,7 +31,7 @@ public class PostController {
     }
 
     @GetMapping("")
-    public List<Post> showPosts()
+    public List<PostDTO> showPosts()
     {
         return postService.showPosts();
     }

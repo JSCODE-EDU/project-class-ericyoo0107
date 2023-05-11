@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,24 +16,24 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
 
-    public Post DtoToEntity(PostDTO postDTO)
-    {
-        Post post = new Post(postDTO.getId(), postDTO.getTitle(), postDTO.getContent(), postDTO.getCreateTime());
-        return post;
-    }
-    
 
+    
 
     public void writePost(PostDTO postDTO)
     {
-        Post post = DtoToEntity(postDTO);
+        Post post = postDTO.DtoToEntity();
         postRepository.save(post); //save 하면 자동으로 테이블도 생기는게 레전드
     }
 
-    public List<Post> showPosts() // 이거 DTO말고 entity 통으로 반환했는데 괜찮을까..?
+    public List<PostDTO> showPosts() // 이거 DTO말고 entity 통으로 반환했는데 괜찮을까..?
     {
-        List<Post> posts = postRepository.findAll();
-        return posts;
+        List<Post> postEntityList = postRepository.findAll();
+        List<PostDTO> postDTOList = new ArrayList<>();
+        for (Post post : postEntityList) {
+            PostDTO postDTO = post.EntityToDTO();
+            postDTOList.add(postDTO);
+        }
+        return postDTOList;
     }
 
     public Post findPostByID(Long id)

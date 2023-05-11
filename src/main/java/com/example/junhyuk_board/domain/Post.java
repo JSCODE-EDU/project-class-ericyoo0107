@@ -3,6 +3,7 @@ package com.example.junhyuk_board.domain;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -22,4 +23,11 @@ public class Post {
 
     @Temporal(TemporalType.TIMESTAMP) // 이 어노테이션을 붙이면 Postman에서 따로 바디에 createTime 값을 넣지 않아도 되는지? =>nullable이어서 그런듯
     private Date createTime; //util의 date는 시분초까지 찍힌다
+
+    public PostDTO EntityToDTO()
+    {
+        PostDTO postDTO = new PostDTO(id, title, content, createTime);
+        return postDTO;
+    }
+
 }

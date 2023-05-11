@@ -12,4 +12,10 @@ public class PostDTO {
     private String title;
     private String content;
     private Date createTime;
+
+    public Post DtoToEntity()
+    {
+        Post post = new Post(id,title,content,createTime);
+        return post;
+    }
 }
