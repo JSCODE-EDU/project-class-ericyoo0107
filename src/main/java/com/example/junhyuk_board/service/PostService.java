@@ -4,7 +4,6 @@ import com.example.junhyuk_board.domain.Post;
 import com.example.junhyuk_board.domain.PostDTO;
 import com.example.junhyuk_board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -17,8 +16,7 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
 
-    public void writePost(PostDTO postDTO)
-    {
+    public void writePost(PostDTO postDTO) {
         Post post = postDTO.DtoToEntity();
         postRepository.save(post); //save 하면 자동으로 테이블도 생기는게 레전드
     }
@@ -34,16 +32,14 @@ public class PostService {
         return postDTOList;
     }
 
-    public PostDTO findPostByID(Long id)
-    {
+    public PostDTO findPostByID(Long id) {
         Optional<Post> post = postRepository.findById(id);
         Post naturalPost = post.get();
         PostDTO postDTO = naturalPost.EntityToDTO();
         return postDTO;
     }
 
-    public PostDTO updatePostByID(Long id, String newTitle, String newContent)
-    {
+    public PostDTO updatePostByID(Long id, String newTitle, String newContent) {
         Optional<Post> post = postRepository.findById(id);
         Post naturalPost = post.get();
         naturalPost.setTitle(newTitle);
@@ -55,8 +51,7 @@ public class PostService {
         return updatePost;
     }
 
-    public void deletePostByID(Long id)
-    {
+    public void deletePostByID(Long id) {
         postRepository.deleteById(id);
     }
 }

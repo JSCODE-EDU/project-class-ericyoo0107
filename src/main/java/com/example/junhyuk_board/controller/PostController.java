@@ -1,9 +1,7 @@
 package com.example.junhyuk_board.controller;
 
-import com.example.junhyuk_board.domain.Post;
 import com.example.junhyuk_board.domain.PostDTO;
 import com.example.junhyuk_board.service.PostService;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -22,8 +20,7 @@ public class PostController {
     private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
     @PostMapping("write")
-    public void writePost(@RequestBody PostDTO postDTO)
-    {
+    public void writePost(@RequestBody PostDTO postDTO) {
         Timestamp createTime = new Timestamp(System.currentTimeMillis());
         postDTO.setCreateTime(createTime);
         postService.writePost(postDTO);
@@ -31,26 +28,22 @@ public class PostController {
     }
 
     @GetMapping("")
-    public List<PostDTO> showPosts()
-    {
+    public List<PostDTO> showPosts() {
         return postService.showPosts();
     }
 
     @GetMapping("{id}")
-    public PostDTO showPostByID(@PathVariable String id)
-    {
+    public PostDTO showPostByID(@PathVariable String id) {
         return postService.findPostByID(Long.parseLong(id));
     }
 
     @PatchMapping("{id}")
-    public PostDTO updatePostByID(@PathVariable String id, @RequestBody PostDTO updatePost)
-    {
+    public PostDTO updatePostByID(@PathVariable String id, @RequestBody PostDTO updatePost) {
         return postService.updatePostByID(Long.parseLong(id), updatePost.getTitle(), updatePost.getContent());
     }
 
     @DeleteMapping("{id}")
-    public void deletePostByID(@PathVariable String id)
-    {
+    public void deletePostByID(@PathVariable String id) {
         postService.deletePostByID(Long.parseLong(id));
     }
 }

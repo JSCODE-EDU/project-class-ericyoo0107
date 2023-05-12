@@ -24,8 +24,8 @@ public class Post {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
-    public PostDTO EntityToDTO()
-    {
+
+    public PostDTO EntityToDTO() {
         PostDTO postDTO = new PostDTO(id, title, content, createTime, updateTime);
         return postDTO;
     }
