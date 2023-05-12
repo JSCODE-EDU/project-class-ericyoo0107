@@ -47,4 +47,10 @@ public class PostController {
     {
         return postService.updatePostByID(Long.parseLong(id), updatePost.getTitle(), updatePost.getContent());
     }
+
+    @DeleteMapping("{id}")
+    public void deletePostByID(@PathVariable String id)
+    {
+        postService.deletePostByID(Long.parseLong(id));
+    }
 }

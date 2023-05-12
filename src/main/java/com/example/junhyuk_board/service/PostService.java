@@ -54,4 +54,9 @@ public class PostService {
         PostDTO updatePost = naturalPost.EntityToDTO();
         return updatePost;
     }
+
+    public void deletePostByID(Long id)
+    {
+        postRepository.deleteById(id);
+    }
 }
