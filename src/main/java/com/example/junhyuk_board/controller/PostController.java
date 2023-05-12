@@ -41,4 +41,10 @@ public class PostController {
     {
         return postService.findPostByID(Long.parseLong(id));
     }
+
+    @PatchMapping("{id}")
+    public PostDTO updatePostByID(@PathVariable String id, @RequestBody PostDTO updatePost)
+    {
+        return postService.updatePostByID(Long.parseLong(id), updatePost.getTitle(), updatePost.getContent());
+    }
 }

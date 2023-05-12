@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +16,6 @@ import java.util.Optional;
 @RequiredArgsConstructor //의존성 주입을 대체
 public class PostService {
     private final PostRepository postRepository;
-
-
-    
 
     public void writePost(PostDTO postDTO)
     {
@@ -42,5 +40,18 @@ public class PostService {
         Post naturalPost = post.get();
         PostDTO postDTO = naturalPost.EntityToDTO();
         return postDTO;
+    }
+
+    public PostDTO updatePostByID(Long id, String newTitle, String newContent)
+    {
+        Optional<Post> post = postRepository.findById(id);
+        Post naturalPost = post.get();
+        naturalPost.setTitle(newTitle);
+        naturalPost.setContent(newContent);
+        Timestamp updateTime = new Timestamp(System.currentTimeMillis());
+        naturalPost.setUpdateTime(updateTime);
+        postRepository.save(naturalPost);
+        PostDTO updatePost = naturalPost.EntityToDTO();
+        return updatePost;
     }
 }

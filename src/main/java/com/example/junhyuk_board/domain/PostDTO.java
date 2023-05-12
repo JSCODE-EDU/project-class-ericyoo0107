@@ -13,9 +13,11 @@ public class PostDTO {
     private String content;
     private Date createTime;
 
+    private Date updateTime;
+
     public Post DtoToEntity()
     {
-        Post post = new Post(id,title,content,createTime);
+        Post post = new Post(id,title,content,createTime, updateTime);
         return post;
     }
 }
