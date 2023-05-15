@@ -3,6 +3,7 @@ package com.example.junhyuk_board.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -11,12 +12,12 @@ public class PostDTO {
     private Long id;
     private String title;
     private String content;
-    private Date createTime;
+    private LocalDateTime createdDate;
 
-    private Date updateTime;
+    private LocalDateTime modifiedDate;
 
     public Post DtoToEntity() {
-        Post post = new Post(id, title, content, createTime, updateTime);
+        Post post = new Post(id, title, content);
         return post;
     }
 }
