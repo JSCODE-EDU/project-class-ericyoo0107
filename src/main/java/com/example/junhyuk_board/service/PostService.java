@@ -4,17 +4,16 @@ import com.example.junhyuk_board.domain.Post;
 import com.example.junhyuk_board.domain.PostDTO;
 import com.example.junhyuk_board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor //의존성 주입을 대체
+@Transactional
 public class PostService {
     private final PostRepository postRepository;
 
@@ -49,5 +48,12 @@ public class PostService {
 
     public void deletePostByID(Long id) {
         postRepository.deleteById(id);
+    }
+
+    public List<PostDTO> showPostBySearch(String Title)
+    {
+        List<Post> postList = postRepository.findTop100ByTitleContainingOrderByModifiedDate(Title);
+        List<PostDTO> postDTOList = postList.stream().map(post -> post.EntityToDTO()).collect(Collectors.toList());
+        return postDTOList;
     }
 }

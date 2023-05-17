@@ -2,11 +2,7 @@ package com.example.junhyuk_board.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Setter
@@ -27,7 +23,6 @@ public class Post extends BaseTimeEntity{
 //
 //    @Temporal(TemporalType.TIMESTAMP)
 //    private Date updateTime;
-
 
     public PostDTO EntityToDTO() {
         PostDTO postDTO = new PostDTO(id, title, content, getCreatedDate(), getModifiedDate());

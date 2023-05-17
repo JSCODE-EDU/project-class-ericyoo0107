@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -26,7 +25,7 @@ public class PostController {
     }
 
     @GetMapping("")
-    public List<PostDTO> showPosts() {
+    public List<PostDTO> showPosts() { //result로 감싸서 반환하면 나중에 유지보수 하기 편함
         return postService.showPosts();
     }
 
@@ -43,5 +42,12 @@ public class PostController {
     @DeleteMapping("{id}")
     public void deletePostByID(@PathVariable String id) {
         postService.deletePostByID(Long.parseLong(id));
+    }
+
+    @GetMapping("/search")
+    public List<PostDTO> showPostBySearch(@RequestParam String title)
+    {
+        List<PostDTO> postDTOList = postService.showPostBySearch(title);
+        return postDTOList;
     }
 }
