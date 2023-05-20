@@ -2,6 +2,7 @@ package com.example.junhyuk_board.controller;
 
 import com.example.junhyuk_board.domain.PostDTO;
 import com.example.junhyuk_board.service.PostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ public class PostController {
     private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
     @PostMapping("write")
-    public void writePost(@RequestBody PostDTO postDTO) {
+    public void writePost(@Valid @RequestBody PostDTO postDTO) {
         postService.writePost(postDTO);
         logger.info("게시물 저장!");
     }
