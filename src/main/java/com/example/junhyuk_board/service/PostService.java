@@ -5,30 +5,27 @@ import com.example.junhyuk_board.domain.PostDTO;
 import com.example.junhyuk_board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor //의존성 주입을 대체
+@Transactional
 public class PostService {
     private final PostRepository postRepository;
 
     public void writePost(PostDTO postDTO) {
         Post post = postDTO.DtoToEntity();
-        postRepository.save(post); //save 하면 자동으로 테이블도 생기는게 레전드
+        postRepository.save(post);
     }
 
-    public List<PostDTO> showPosts() // 이거 DTO말고 entity 통으로 반환했는데 괜찮을까..?
+    public List<PostDTO> showPosts()
     {
-        List<Post> postEntityList = postRepository.findAll();
-        List<PostDTO> postDTOList = new ArrayList<>();
-        for (Post post : postEntityList) {
-            PostDTO postDTO = post.EntityToDTO();
-            postDTOList.add(postDTO);
-        }
+        List<Post> postList = postRepository.findTop100ByOrderByModifiedDate();
+        List<PostDTO> postDTOList = postList.stream().map(post -> post.EntityToDTO()).collect(Collectors.toList());
         return postDTOList;
     }
 
@@ -44,8 +41,6 @@ public class PostService {
         Post naturalPost = post.get();
         naturalPost.setTitle(newTitle);
         naturalPost.setContent(newContent);
-        Timestamp updateTime = new Timestamp(System.currentTimeMillis());
-        naturalPost.setUpdateTime(updateTime);
         postRepository.save(naturalPost);
         PostDTO updatePost = naturalPost.EntityToDTO();
         return updatePost;
@@ -53,5 +48,12 @@ public class PostService {
 
     public void deletePostByID(Long id) {
         postRepository.deleteById(id);
+    }
+
+    public List<PostDTO> showPostBySearch(String Title)
+    {
+        List<Post> postList = postRepository.findTop100ByTitleContainingOrderByModifiedDate(Title);
+        List<PostDTO> postDTOList = postList.stream().map(post -> post.EntityToDTO()).collect(Collectors.toList());
+        return postDTOList;
     }
 }
