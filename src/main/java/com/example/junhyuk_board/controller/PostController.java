@@ -21,8 +21,6 @@ public class PostController {
 
     @PostMapping("write")
     public void writePost(@RequestBody PostDTO postDTO) {
-        Timestamp createTime = new Timestamp(System.currentTimeMillis());
-        postDTO.setCreateTime(createTime);
         postService.writePost(postDTO);
         logger.info("게시물 저장!");
     }
